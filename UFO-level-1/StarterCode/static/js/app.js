@@ -1,179 +1,114 @@
 // from data.js
 var tableData = data;
 
-
-// YOUR CODE HERE!
-// Get a reference to the table body
-// var tbody = d3.select("tbody");
-
-
-// data.forEach(function(tableData) {
-//   console.log(tableData);
-//   var row = tbody.append("tr");
-//   Object.entries(tableData).forEach(function([key, value]) {
-//     console.log(key, value);
-//     // Append a cell to the row for each value
-//     // in the weather report object
-//     var cell = row.append("td");
-//     cell.text(value);
-//   });
-// });
-
-// TESTING
-
-// Select the button
+// Saving references to our html elements
+var inputDate = d3.select("#datetime");
+var inputCity = d3.select("#cityInput");
+var inputState = d3.select("#stateInput");
+var inputCountry = d3.select("#countryInput");
+var inputShape = d3.select("#shapeInput");
+var tbody = d3.select("tbody");
 var button = d3.select("#filter-btn");
-
-// Select the form
-var form = d3.select("#form");
-
-var inputField = d3.select("#datetime")
+var form = d3.select("#filter-btn");
 
 // Create event handlers 
 button.on("click", runEnter);
-form.on("submit",runEnter);
-
-var tbody = d3.select("tbody");
-
 
 // Complete the event handler function for the form
 function runEnter() {
-  
   // Clear anything in the table
   tbody.html("");
   
-  // Prevent the page from refreshing
-  d3.event.preventDefault();
-  
-  // Select the input element and get the raw HTML node
-  var inputDate = d3.select("#datetime");
-  var inputCity = d3.select("#cityInput");
-  var inputState = d3.select("#stateInput");
-  var inputCountry = d3.select("#countryInput");
-  var inputShape = d3.select("#shapeInput");
-
-  // Get the value property of the input element
+// Read user input and save it as variable
   var DateValue = inputDate.property("value");
-  var CityValue = inputCity.property("value");
-  var StateValue = inputState.property("value");
-  var CountryValue = inputCountry.property("value");
-  var ShapeValue = inputShape.property("value");
+  var cityValue = inputCity.property("value");
+  var stateValue = inputState.property("value");
+  var countryValue = inputCountry.property("value");
+  var shapeValue = inputShape.property("value");  
 
+// If a user has entered a value in the field this will filter our data based on user input
+  var filteredData = tableData.filter((userinput) => {
 
-
-// TESTING
-// var filteredRoster = roster.filter((player) => {
-  
-//   // By default set the match to false
-//   var matchesName = false;
-//   var matchesPosition = false;
-
-//   // If user has entered a value to the name field, check if it is included in the name of the player
-//   if (nameFilterValue != '' && player.name.toLowerCase().includes(nameFilterValue)) {
-//       matchesName = true;
-//   }
-
-//   // If the user didn't enter anything in the name field, we will set match to true by default
-//   if (nameFilterValue == '') {
-//       matchesName = true;
-//   }
-
-//   if (positionFilterValue != '' && player.position.toLowerCase().includes(positionFilterValue)) {
-//       matchesPosition = true;
-//   }
-
-//   if (positionFilterValue == '') {
-//       matchesPosition = true;
-//   }
-
-//   // Will return true if BOTH position and name match
-//   return matchesName && matchesPosition;
-
-// });
-
-//TESTING 
-
-  
-  var filteredData = tableData.filter((input) => {
-    
-    // By default set the match to false
+  // By default set the match to false
     var matchesDate = false;
-    // var matchesCity = false;
-    // var matchesState = false;
-    // var matchesCountry = false;
-    // var matchesShape = false;
-
-    // If user has entered a value to the name field, check if it is included in the name of the player
-  if (DateValue != '' && input.datetime === DateValue) {
-    matchesDate = true;
+    var matchesCity = false;
+    var matchesState = false;
+    var matchesCountry = false;
+    var matchesShape = false;
+  
+    // If a user has entered a value into this field ensure that it match our dataset
+    if (DateValue != "" && userinput.datetime === DateValue) {
+      matchesDate = true;
+      }
+      
+    // If the user didn't enter anything in this field, we will set match to true by default
+    if (DateValue == "") {
+        matchesDate = true;
     }
 
-    // If the user didn't enter anything in the name field, we will set match to true by default
-  if (DateValue == '') {
-    matchesName = true;
-  }
+    // If a user has entered a value into this field ensure that it match our dataset
+    if (cityValue != "" && userinput.city === cityValue) {
+        matchesCity = true;
+      }
 
-  return matchesDate 
+       // If the user didn't enter anything in this field, we will set match to true by default
+    if (cityValue == "") {
+        matchesCity = true;
+    }
+
+    // If a user has entered a value into this field ensure that it match our dataset
+    if (stateValue != "" && userinput.state === stateValue) {
+      matchesState = true;
+    }
+
+    // If the user didn't enter anything in this field, we will set match to true by default
+    if (stateValue == "") {
+      matchesState = true;
+    }
+
+    // If a user has entered a value into this field ensure that it match our dataset
+    if (countryValue != "" && userinput.country === countryValue) {
+      matchesCountry = true;
+    }
+
+    // If the user didn't enter anything in this field, we will set match to true by default
+    if (countryValue == "") {
+      matchesCountry = true;
+    }
+
+    // If a user has entered a value into this field ensure that it match our dataset
+    if (shapeValue != "" && userinput.shape === shapeValue) {
+      matchesShape = true;
+    }
+
+    // If the user didn't enter anything in this field, we will set match to true by default
+    if (shapeValue == "") {
+      matchesShape = true;
+    }
+
+    // Will return true if all fields are matched or is true
+    return matchesDate && matchesCity && matchesState && matchesCountry && matchesShape; 
 
   });
-
-  //TESTING
- 
-
-
+  
+  // Display the filtered sitings
   filteredData.forEach(function(filteredData) {
     console.log(filteredData);
     var row = tbody.append("tr");
+
+    // Iterate through the object and add the values to the table
     Object.entries(filteredData).forEach(function([key, value]) {
-      //console.log(key, value);
-      // Append a cell to the row for each value
-      // in the weather report object
       var cell = row.append("td");
       cell.text(value);
     });
   });
+};
 
-  runEnter();
+runEnter();
 
-
-  // console.log(filteredData); };
-
-  // inputField.on("change", function() {
-  //   const tbody = document.getElementById("ufo-table").getElementsByTagName('tbody')[0];
-  //   tbody.innerHTML = "";
-  // });
-
-// const key = 'shape';
-
-// const arrayUniqueByKey = [...new Map(tableData.map(item =>
-//   [item[key], item])).values()];
-
-// console.log(arrayUniqueByKey);
-
-
-// console.log(tableData.map(item => item.shape).filter((value, index, self) => self.indexOf(value) === index));
-
-
-  // Class
-
-// event "keyup"
-
-
-
-
- // function renderTable() {
-// Read the filter values
-
-//~~Filter out anything not matching the filter
-//~~ .property("value") is to read the user input
-
-//~~ Create variable for filtered data 
-//~~filter function will take out element that is false and will only keep those that are true
-//~~ What happens if the input is empty
-// if(nameInput === "" && positionInput === "" ) {
-//  return true;
-//}
-
-//Display the data
-
-  }
+// Attach the function to the keyup event so that it runs everytime a key is pressed it auto filters
+inputDate.on("keyup", runEnter);
+inputCity.on("keyup", runEnter);
+inputState.on("keyup", runEnter);
+inputCountry.on("keyup", runEnter);
+inputShape.on("keyup", runEnter);

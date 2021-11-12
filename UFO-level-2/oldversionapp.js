@@ -51,7 +51,6 @@ function runEnter() {
 
   var filteredData = tableData.filter(dateTime => dateTime.datetime === inputValue);
 
-  //TESTING
   var tbody = d3.select("tbody");
 
 
@@ -74,14 +73,3 @@ function runEnter() {
     const tbody = document.getElementById("ufo-table").getElementsByTagName('tbody')[0];
     tbody.innerHTML = "";
   });
-
-// const key = 'shape';
-
-// const arrayUniqueByKey = [...new Map(tableData.map(item =>
-//   [item[key], item])).values()];
-
-// console.log(arrayUniqueByKey);
-
-// var arrayUniqueByKey tableData.map(item => item.age).filter((value, index, self) => self.indexOf(value) === index)
-
-//   console.log(arrayUniqueByKey);

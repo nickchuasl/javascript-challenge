@@ -49,7 +49,7 @@ function runEnter() {
   console.log(inputValue);
   console.log(tableData);
 
-  var filteredData = tableData.filter(dateTime => dateTime.datetime === inputValue);
+  var filteredData = tableData.filter((dateTime) => dateTime.datetime === inputValue);
 
   //TESTING
   var tbody = d3.select("tbody");
